@@ -50,9 +50,8 @@ def register():
         user.set_password(form.password.data)
         db.session.add(user)
         db.session.commit()
-        flash('Congratulations {}, are now a registered user!'.format(form.username.data))
-        form = LogActivity()
-        return render_template("user.html",user=user.username, form=form)
+        flash('Congratulations {}, you are now a registered user!'.format(form.username.data))
+        return redirect(url_for('user',username=user.username))
     return render_template('register.html', title='Register', form=form)
 
 @app.route('/user/<username>', methods=['GET','POST'])
