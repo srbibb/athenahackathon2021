@@ -8,7 +8,6 @@ from app.models import User
 
 @app.route('/')
 @app.route('/index')
-@login_required
 def index():
     posts = [
         {
@@ -70,3 +69,8 @@ def user(username):
         {'author': user, 'body': 'Test post #2'}
     ]
     return render_template('user.html', user=user, posts=posts)
+
+@app.route('/leaderboard')
+@login_required
+def leaderboard():
+    return render_template('leaderboard.html', title='Leaderboard')
