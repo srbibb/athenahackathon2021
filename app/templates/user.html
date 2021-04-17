@@ -9,6 +9,13 @@
                 {% if user.last_seen %}<p>Last seen on: {{ user.last_seen }}</p>{% endif %}
                 <p>{{ user.followers.count() }} followers, {{ user.followed.count() }} following.</p>
                 {% if user == current_user %}
+
+                {% for post in posts %}
+                <p>
+                {{ post.author.username }}
+                </p>
+                {% endfor %}
+
                 {% elif not current_user.is_following(user) %}
                 <p>
                     <form action="{{ url_for('follow', username=user.username) }}" method="post">
