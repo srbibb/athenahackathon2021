@@ -1,11 +1,36 @@
 {% extends "base.html" %}
 
+
 {% block content %}
-    <h1>User: {{ user.username }}</h1>
+    <h2>Points: {{ points }}</hs>
+
+    <h2>Log activity</h2>
+    <form action="" method="post" novalidate>
+        {{ form.hidden_tag() }}
+        <p>
+            I 
+            <select name="action">
+                {% for action in form.action.choices %}
+                <option value= "{{ action }}" SELECTED>{{ action }}</option>"
+                {% endfor %}
+            </select>
+            {{ form.item(cols=32, rows=4) }}
+            <br>
+            {{ form.comment.label }}
+            <br>
+            {{ form.comment(cols=58, rows=4) }}<br>
+            {% for error in form.comment.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>{{ form.submit() }}</p>
+    </form>
+
+    <h2>Activity feed</h2>
     <hr>
     {% for post in posts %}
     <p>
-    {{ post.author.username }} says: <b>{{ post.body }}</b>
+    <b>{{ post.author.username }}</b>{{ post.body }}
     </p>
     {% endfor %}
 {% endblock %}

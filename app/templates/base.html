@@ -1,23 +1,28 @@
 <html>
     <head>
         {% if title %}
-        <title>{{ title }} - Microblog</title>
+        <title>{{ title }} </title>
         {% else %}
-        <title>Welcome to Microblog</title>
+        <title>Welcome to ProductName</title>
         {% endif %}
+        <link rel="stylesheet" href={{ url_for('static', filename='base.css') }}>
+        <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto" rel="stylesheet" type="text/css">
+        <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open&Sans" rel="stylesheet" type="text/css">
     </head>
     <body>
-        <div>
-            Title:
+        <div class="navbar">
+            <img src="{{ url_for('static', filename='logo.png')}}" alt="logo" width=5%/>
             <a href="{{ url_for('index') }}">Home</a>
             {% if current_user.is_anonymous %}
             <a href="{{ url_for('login') }}">Login</a>
             {% else %}
+            <a href="{{ url_for('leaderboard', username=current_user.username ) }}">Leaderboard</a>
             <a href="{{ url_for('user', username=current_user.username) }}">Profile</a>
             <a href="{{ url_for('logout') }}">Logout</a>
             {% endif %}
         </div>
-        <hr>
+        <div class="main">
+        <ul>
         {% with messages = get_flashed_messages() %}
         {% if messages %}
         <ul>
@@ -28,5 +33,6 @@
         {% endif %}
         {% endwith %}
         {% block content %}{% endblock %}
+    </div>
     </body>
 </html>
