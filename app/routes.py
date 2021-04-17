@@ -62,10 +62,11 @@ def user(username):
     form = LogActivity()
     if form.validate_on_submit():
         post = Post(action=form.action.data, item=form.item.data,body=form.comment.data, author=current_user)
-        if post.body is None or post.body == '':
-            post.body = post.action + ' ' + post.item       
         post.calculate_points()
-         
+        post.body = '{} says: "I have {} {}." They have earned {} points!'.format(post.author.username, post.action.lower(), post.item,str(post.points))
+        if form.comment.data is not None or len(form.comment.data)>0:
+            post.body = post.body + '\n' + form.comment.data
+        
         user.points = user.points + post.points
         db.session.add(post)
         db.session.commit()
