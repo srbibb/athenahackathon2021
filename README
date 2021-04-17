@@ -1,0 +1,3 @@
+Web application produced using Flask for the Athena Hackathon 16-18 April 2021 with theme Circular Economy. The implementation was heavily based on the excellent [series of blog posts](https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-i-hello-world) by Miguel Grinberg.
+
+The main objective of the project was to create a web app that allows users to connect with friends across the world and share their progress and compete in weekly challenges to promote ideas around the circular economy including reusing, recycling and repurposing posessions instead of throwing them away.
