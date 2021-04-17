@@ -1,0 +1,2 @@
+Web application produced using Flask for the Athena Hackathon 16-18 April 2021 with theme Circular Economy.
+The implementation was heavily based on the excellent [series of blog posts](https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-i-hello-world) by Miguel Grinberg.
