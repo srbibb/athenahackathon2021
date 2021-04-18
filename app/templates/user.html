@@ -2,12 +2,12 @@
 {% block content %}
     <h2>{{ user.username }}: {{ user.points }}</h2>
 
-    <table>
+    <table class="aboutme">
         <tr valign="top">
             <td>
                 {% if user.about_me %}<p>{{ user.about_me }}</p>{% endif %}
                 {% if user.last_seen %}<p>Last seen on: {{ user.last_seen }}</p>{% endif %}
-                {% if user.followers %}<p> {{ user.followers.count() }} followers, {{ user.followed.count() }} following.</p>{% endif %}
+                <p> {{ user.followers.count() }} followers, {{ user.followed.count() }} following.</p>
                 {% if user == current_user %}
 
                 {% for user in current_user.followed %}
@@ -69,7 +69,7 @@
     <span id="postauthor"></span><b>{{ post.author.username }}</b></span>
     <span id="postbody">{{ post.body }}</span>
     <br>
-    <span id="postlikes">{{ post.likes }} <form action="{{ url_for('update_like', username=user.username, post_id=post.id) }}" method="POST">
+    <span id="postlikes"> <form action="{{ url_for('update_like', username=user.username, post_id=post.id) }}" method="POST">{{ post.likes }}
         <button><i class="fa fa-heart"></i></button>
    </form>
     </span>

@@ -100,6 +100,12 @@ body {
 }
 
 #postlikes {
-    padding-left: 85%;
+    padding-left: 80%;
+    text-align: center;
+}
+
+.aboutme {
     text-align: right;
+    margin-left:auto;
+    margin-right: auto;
 }
