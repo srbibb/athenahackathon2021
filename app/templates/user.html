@@ -1,39 +1,38 @@
 {% extends "base.html" %}
+
 {% block content %}
-    <h2>{{ user }}: {{ points }}</h2>
-    <div class="activitylog">
-    <h4>Log activity</h4>
-    <form action="" method="post" novalidate>
-        {{ form.hidden_tag() }}
-        <p>
-            I 
-            <select name="action">
-                {% for action in form.action.choices %}
-                <option value= "{{ action }}" SELECTED>{{ action }}</option>"
+    <table>
+        <tr valign="top">
+            <td>
+                <h1>User: {{ user.username }}</h1>
+                {% if user.about_me %}<p>{{ user.about_me }}</p>{% endif %}
+                {% if user.last_seen %}<p>Last seen on: {{ user.last_seen }}</p>{% endif %}
+                <p>{{ user.followers.count() }} followers, {{ user.followed.count() }} following.</p>
+                {% if user == current_user %}
+
+                {% for user in current_user.followed %}
+
+                {{ user.username }}
+
                 {% endfor %}
-            </select>
-            {{ form.item(cols=32, rows=4) }}
-            <br>
-            {{ form.comment.label }}
-            <br>
-            {{ form.comment(cols=58, rows=4) }}<br>
-            {% for error in form.comment.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        <p>{{ form.submit() }}</p>
-    </form>
-    </div>  
-    
-    <h4>Activity feed</h4>
+
+                {% elif not current_user.is_following(user) %}
+                <p>
+                    <form action="{{ url_for('follow', username=user.username) }}" method="post">
+                        {{ form.hidden_tag() }}
+                        {{ form.submit(value='Follow') }}
+                    </form>
+                </p>
+                {% else %}
+                <p>
+                    <form action="{{ url_for('unfollow', username=user.username) }}" method="post">
+                        {{ form.hidden_tag() }}
+                        {{ form.submit(value='Unfollow') }}
+                    </form>
+                </p>
+                {% endif %}
+            </td>
+        </tr>
+    </table>
     <hr>
-    {% for post in posts %}
-    <div class="activitypost">
-    <span id="postauthor"></span><b>{{ post.author.username }}</b></span>
-    <span id="postbody">{{ post.body }}</span>
-    <br>
-    <span id="posttime"><b>Posted:</b> {{post.timestamp }}</span>
-    <br>
-    </div>
-    {% endfor %}
 {% endblock %}
