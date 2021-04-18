@@ -23,7 +23,7 @@ li {
     font-family: Roboto, Open Sans, sans-serif;
 }
 body {
-    background-color: #E5E5E5;
+    background-color:white;
 }
 
 /* The navigation bar */
@@ -69,29 +69,12 @@ body {
     margin-right: auto;
     width: 80%;
 }
-.activitylog {
-    text-align:center;
-    margin-left: auto;
-    margin-right: auto;
-    width: 80%;
-}
+
 .login {
     text-align:center;
     margin-left: auto;
     margin-right: auto;
     width: 80%;
-}
-.activitypost {
-    text-align:left;
-    margin-left: auto;
-    margin-right: auto;
-    padding-bottom: 5px;
-    margin-bottom: 20px;
-    width: 60%;
-    height: 85px;  
-    border-radius: 5px;
-    background-color: #C4C4C4;
-    font-family: Roboto, Open Sans, sans-serif;
 }
 
 
@@ -100,11 +83,6 @@ body {
     color: black;
   }
   
-
-.followers {
-    font-family: Roboto, Open Sans, sans-serif;
-    text-align: left;
-}
 
 #posttime {
   padding-left: 70%;
@@ -120,4 +98,54 @@ body {
     text-align: right;
     margin-left:auto;
     margin-right: auto;
+}
+.activitylog {
+    text-align:center;
+    margin-left: auto;
+    margin-right: auto;
+}
+#container {
+    width: 100%;
+    clear: both;
+    margin: auto;
+}
+
+#followers {
+    font-family: Roboto, Open Sans, sans-serif;
+    text-align: left;
+    margin-left: 50px;
+    margin-right: 25px;
+    width: 20%;
+    height: 800px;
+    float: left;
+}
+#activityfeed {
+    text-align:center;
+    margin-left: 25px;
+    margin-right: 50px;
+    width: 65%;
+    height: 800px;
+    float: left;
+}
+.activitypost {
+    text-align:left;
+    margin-left: auto;
+    margin-right: auto;
+    padding-bottom: 5px;
+    margin-bottom: 20px;
+    width: 60%;
+    height: 85px;  
+    border-radius: 5px;
+    background-color: #C4C4C4;
+    font-family: Roboto, Open Sans, sans-serif;
+}
+
+#follower {
+    text-align: center;
+    text-decoration: none;
+}
+
+#following {
+    text-align: center;
+    text-decoration: none;
 }
