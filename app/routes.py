@@ -9,7 +9,6 @@ from datetime import datetime
 
 @app.route('/')
 @app.route('/index')
-@login_required
 def index():
     return render_template("index.html", title='Home Page')
 
@@ -59,6 +58,7 @@ def register():
 @login_required
 def user(username):
     user = User.query.filter_by(username=username).first_or_404()
+
     posts = db.session.query(Post).order_by(desc(Post.id)).limit(20).all()
     form = LogActivity()
     if form.validate_on_submit():
@@ -98,5 +98,13 @@ def update_like():
 
 
 
+    posts = [
+        {'author': user, 'body': 'Test post #1'},
+        {'author': user, 'body': 'Test post #2'}
+    ]
+    return render_template('user.html', user=user, posts=posts)
 
-
+@app.route('/leaderboard')
+@login_required
+def leaderboard():
+    return render_template('leaderboard.html', title='Leaderboard')
