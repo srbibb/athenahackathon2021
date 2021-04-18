@@ -2,7 +2,7 @@ from flask import render_template, flash, redirect, url_for, request
 from flask_login import login_user, logout_user, current_user, login_required
 from werkzeug.urls import url_parse
 from app import app, db
-from app.forms import LoginForm, RegistrationForm, LogActivity
+from app.forms import LoginForm, RegistrationForm, LogActivity, EmptyForm
 from app.models import User, Post
 from sqlalchemy import desc
 from datetime import datetime
@@ -61,6 +61,8 @@ def user(username):
 
     posts = db.session.query(Post).order_by(desc(Post.id)).limit(20).all()
     form = LogActivity()
+    form2 = EmptyForm()
+    #posts = current_user.followed_posts().all()
     if form.validate_on_submit():
         post = Post(action=form.action.data, item=form.item.data,body=form.comment.data, author=current_user)
         post.calculate_points()
@@ -83,7 +85,7 @@ def user(username):
         form = LogActivity()
         return redirect(request.url)
         
-    return render_template("user.html",user=username, posts=posts, form=form, points=user.points)
+    return render_template("user.html",user=user, posts=posts, form=form, points=user.points)
 
 @app.route('/update_like',methods=['POST'])
 @login_required
@@ -97,14 +99,41 @@ def update_like():
     return redirect(url_for('user', username=username))
 
 
-
-    posts = [
-        {'author': user, 'body': 'Test post #1'},
-        {'author': user, 'body': 'Test post #2'}
-    ]
-    return render_template('user.html', user=user, posts=posts)
-
-@app.route('/leaderboard')
+@app.route('/follow/<username>', methods=['POST'])
 @login_required
-def leaderboard():
-    return render_template('leaderboard.html', title='Leaderboard')
+def follow(username):
+    form = EmptyForm()
+    if form.validate_on_submit():
+        user = User.query.filter_by(username=username).first()
+        if user is None:
+            flash('User {} not found.'.format(username))
+            return redirect(url_for('index'))
+        if user == current_user:
+            flash('You cannot follow yourself!')
+            return redirect(url_for('user', username=username))
+        current_user.follow(user)
+        db.session.commit()
+        flash('You are following {}!'.format(username))
+        return redirect(url_for('user', username=username))
+    else:
+        return redirect(url_for('index'))
+
+
+@app.route('/unfollow/<username>', methods=['POST'])
+@login_required
+def unfollow(username):
+    form = EmptyForm()
+    if form.validate_on_submit():
+        user = User.query.filter_by(username=username).first()
+        if user is None:
+            flash('User {} not found.'.format(username))
+            return redirect(url_for('index'))
+        if user == current_user:
+            flash('You cannot unfollow yourself!')
+            return redirect(url_for('user', username=username))
+        current_user.unfollow(user)
+        db.session.commit()
+        flash('You are not following {}.'.format(username))
+        return redirect(url_for('user', username=username))
+    else:
+        return redirect(url_for('index'))
