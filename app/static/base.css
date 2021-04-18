@@ -53,6 +53,10 @@ body {
     color: black;
   }
 
+div.image {
+    float: right;
+}
+
   /* Main content */
 .main {
     margin-top: 10%; /* Add a top margin to avoid content overlay */
