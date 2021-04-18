@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+{% block content %}
+    
+    <table class="aboutme">
+        <tr valign="top">
+            <td>
+                <h2>{{ user.username }}: {{ user.points }} Points</h2>
+                {% if user.about_me %}<p>{{ user.about_me }}</p>{% endif %}
+                {% if user.last_seen %}<p>Last seen on: {{ user.last_seen }}</p>{% endif %}
+                {% if user == current_user %}
+                {% elif not current_user.is_following(user) %}
+                <p>
+                    <form action="{{ url_for('follow', username=user.username) }}" method="post">
+                        {{ form.hidden_tag() }}
+                        {{ form.submit(value='Follow') }}
+                    </form>
+                </p>
+                {% elif current_user.is_following(user) %}
+                <p>
+                    <form action="{{ url_for('unfollow', username=user.username) }}" method="post">
+                        {{ form.hidden_tag() }}
+                        {{ form.submit(value='Unfollow') }}
+                    </form>
+                </p>
+                {% endif %}
+            </td>
+        </tr>
+    </table>
+
+    {% if user == current_user %}
+    <div class="activitylog">
+    <h4>Log activity</h4>
+    <form action="" method="post" novalidate>
+        {{ form.hidden_tag() }}
+        <p>
+            I 
+            <select name="action">
+                {% for action in form.action.choices %}
+                <option value= "{{ action }}" SELECTED>{{ action }}</option>"
+                {% endfor %}
+            </select>
+            {{ form.item(cols=32, rows=4) }}
+            <br>
+            {{ form.comment.label }}
+            <br>
+            {{ form.comment(cols=58, rows=4) }}<br>
+            {% for error in form.comment.errors %}
+            <span class="error" style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>{{ form.submit() }}</p>
+    </form>
+    </div>  
+    {% endif %}
+
+<div id="container">
+    <div id="followers">
+        <div id="followers_all">
+            <h4>{{ user.followers.count() }} Followers</h4>
+            <hr>
+            {% for user in user.followers %}
+            <a href="{{ url_for('user',username=user.username) }}" id="follower">
+            <div>  {{ user.username }} </div> 
+            </a>
+            {% endfor %}   
+        </div>
+
+        <div id="following_all">
+            <h4>Following {{ user.followed.count() }}</h4>
+            <hr>
+            {% for user in user.followed %}
+            <a href="{{ url_for('user',username=user.username) }}" id="following">
+            <div >  {{ user.username }} </div> 
+            </a>
+            {% endfor %}
+        </div>
+
+    </div>
+    <div id="activityfeed">
+        <h4>Activity feed</h4>
+        <hr>
+        {% for post in posts %}
+        <a href="{{ url_for('user',username=post.author.username) }}" id="post_link">
+            <div class="activitypost">
+            <span id="posted info"><b> {{ post.author.username }} posted at {{ post.timestamp }}</b></span>
+            <br>
+            <span id="postauthor"><b>{{ post.author.username }}</b></span>
+            <span id="postbody">{{ post.body }}</span>
+            <br>
+            <span id="postlikes"> <form action="{{ url_for('update_like', username=user.username, post_id=post.id) }}" method="POST">{{ post.likes }}
+                <button><i class="fa fa-heart"></i></button>
+            </form>
+            </span>
+            <br>
+        </div>
+        </a>
+        {% endfor %}
+    </div>
+ 
+</div>
+{% endblock %}
