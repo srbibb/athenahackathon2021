@@ -1,6 +1,13 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h1>Welcome {{ current_user.username }}!</h1>
-    <h2>Click on your profile to see recent activities.</h2> 
+<h1>Welcome to RUYO, {{ current_user.username }}!</h1>
+<center><h3>RUYO's aim is to help you live more responsibly.
+    Use your profile to log actions such as recycling or donating, to earn points, and follow your friends
+    so you can compete with them, and see your personalised leaderboard. Try to earn
+    the most points to make it to the top! <br>
+    You can also view and like your friends contributions, so keep an eye on what they're up
+    to if you're looking for inspiration.
+</h3>
+    <h4>Click on your <a href="{{ url_for('user', username=current_user.username) }}">profile</a> to see recent activities.</h4></center>
 {% endblock %}
