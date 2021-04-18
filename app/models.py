@@ -32,7 +32,7 @@ class Post(db.Model):
     body = db.Column(db.String(140))
     action = db.Column(db.String(64))
     item = db.Column(db.String(64))
-    timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+    timestamp = db.Column(db.String, index=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     points = db.Column(db.Integer,default=0)
 
@@ -40,7 +40,6 @@ class Post(db.Model):
         return '<Post {}>'.format(self.body)
 
     def calculate_points(self):
-        actions = {'Donated':20,'Recycled':1,'Upcycled':15,'Reused':3,'Purchased second hand':20,'Other':0}
+        actions = {'donated':20,'recycled':1,'upcycled':15,'reused':3,'purchased second hand':20,'have something else to share':0}
         self.points = actions[self.action]
-        print(self.points)
 

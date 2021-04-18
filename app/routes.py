@@ -5,6 +5,7 @@ from app import app, db
 from app.forms import LoginForm, RegistrationForm, LogActivity
 from app.models import User, Post
 from sqlalchemy import desc
+from datetime import datetime
 
 @app.route('/')
 @app.route('/index')
@@ -63,13 +64,23 @@ def user(username):
     if form.validate_on_submit():
         post = Post(action=form.action.data, item=form.item.data,body=form.comment.data, author=current_user)
         post.calculate_points()
-        post.body = '{} says: "I have {} {}." They have earned {} points!'.format(post.author.username, post.action.lower(), post.item,str(post.points))
-        if form.comment.data is not None or len(form.comment.data)>0:
-            post.body = post.body + '\n' + form.comment.data
-        
+        if form.action.data != 'have something else to share':
+            if post.points == 1:
+                points_str = 'point'
+            else:
+                points_str = 'points'
+            if post.item is None or len(form.comment.data)==0:
+                post.body = ' says: "I {}." They have earned {} {}!'.format(post.action.lower(), str(post.points), points_str)
+            else:
+                post.body = ' says: "I {} {}." They have earned {} points!'.format(post.action.lower(), post.item,str(post.points))
+            if form.comment.data is not None or len(form.comment.data)>0:
+                post.body = post.body + '\n' + form.comment.data
+        post.timestamp = datetime.now().strftime("%H:%M:%S %d-%m-%Y ")
+
         user.points = user.points + post.points
         db.session.add(post)
         db.session.commit()
+        form = LogActivity()
         return redirect(request.url)
         
     return render_template("user.html",user=username, posts=posts, form=form, points=user.points)

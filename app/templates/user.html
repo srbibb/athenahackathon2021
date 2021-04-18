@@ -1,10 +1,8 @@
 {% extends "base.html" %}
-
-
 {% block content %}
-    <h2>Points: {{ points }}</hs>
-
-    <h2>Log activity</h2>
+    <h2>{{ user }}: {{ points }}</h2>
+    <div class="activitylog">
+    <h4>Log activity</h4>
     <form action="" method="post" novalidate>
         {{ form.hidden_tag() }}
         <p>
@@ -25,12 +23,17 @@
         </p>
         <p>{{ form.submit() }}</p>
     </form>
-
-    <h2>Activity feed</h2>
+    </div>  
+    
+    <h4>Activity feed</h4>
     <hr>
     {% for post in posts %}
-    <p>
-    <b>{{ post.author.username }}</b>{{ post.body }}
-    </p>
+    <div class="activitypost">
+    <span id="postauthor"></span><b>{{ post.author.username }}</b></span>
+    <span id="postbody">{{ post.body }}</span>
+    <br>
+    <span id="posttime"><b>Posted:</b> {{post.timestamp }}</span>
+    <br>
+    </div>
     {% endfor %}
 {% endblock %}
