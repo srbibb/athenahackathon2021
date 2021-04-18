@@ -13,8 +13,8 @@
         rel="stylesheet"  type='text/css'>
         </head>
     <body>
-        <div class="navbar">
-            <img src="{{ url_for('static', filename='logo.png')}}" alt="logo" width=5%/>
+              <div class="navbar">
+            
             <a href="{{ url_for('index') }}">Home</a>
             {% if current_user.is_anonymous %}
             <a href="{{ url_for('login') }}">Login</a>
@@ -23,7 +23,10 @@
             <a href="{{ url_for('leaderboard', username=current_user.username ) }}">Leaderboard</a>
             <a href="{{ url_for('logout') }}">Logout</a>
             {% endif %}
+            <div class="image"> <img src="{{ url_for('static', filename='logo.png')}}" alt="logo" width=100px height=100px/></div>
         </div>
+        
+
         <div class="main">
         <ul>
         {% with messages = get_flashed_messages() %}
