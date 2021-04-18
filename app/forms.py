@@ -1,6 +1,7 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, SubmitField, SelectField, TextAreaField
-from wtforms.validators import ValidationError, DataRequired, Email, EqualTo, Length
+from wtforms import StringField, PasswordField, BooleanField, SubmitField
+from wtforms.validators import DataRequired
+from wtforms.validators import ValidationError, DataRequired, Email, EqualTo
 from app.models import User
 
 
@@ -22,16 +23,9 @@ class RegistrationForm(FlaskForm):
     def validate_username(self, username):
         user = User.query.filter_by(username=username.data).first()
         if user is not None:
-            raise ValidationError('This username has already been registered. Please use a different username.')
+            raise ValidationError('Please use a different username.')
 
     def validate_email(self, email):
         user = User.query.filter_by(email=email.data).first()
         if user is not None:
-            raise ValidationError('This email address has already been registered. Please use a different email address.')
-
-class LogActivity(FlaskForm):
-    actions = {'donated':20,'recycled':1,'upcycled':15,'reused':3,'purchased second hand':20, 'completed the weekly challenge':25,'have something else to share':0}
-    action = SelectField('Action:',choices=list(actions.keys()), validators=[DataRequired()])
-    item = StringField()
-    comment = TextAreaField('Share a comment on your achievement?')
-    submit = SubmitField('Log Activity')
+            raise ValidationError('Please use a different email address.')
