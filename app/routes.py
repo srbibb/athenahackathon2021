@@ -71,7 +71,7 @@ def user(username):
                 points_str = 'point'
             else:
                 points_str = 'points'
-            if post.item is None or len(form.comment.data)==0:
+            if post.item is None or len(form.item.data)==0:
                 post.body = ' says: "I {}." They have earned {} {}!'.format(post.action.lower(), str(post.points), points_str)
             else:
                 post.body = ' says: "I {} {}." They have earned {} points!'.format(post.action.lower(), post.item,str(post.points))
