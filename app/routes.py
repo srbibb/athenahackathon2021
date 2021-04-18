@@ -58,8 +58,7 @@ def register():
 @login_required
 def user(username):
     user = User.query.filter_by(username=username).first_or_404()
-
-    posts = db.session.query(Post).order_by(desc(Post.id)).limit(20).all()
+    posts = user.followed_posts()
     form = LogActivity()
     form2 = EmptyForm()
     #posts = current_user.followed_posts().all()
