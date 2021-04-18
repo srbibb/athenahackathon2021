@@ -1,7 +1,35 @@
 {% extends "base.html" %}
 
 {% block content %}
+<style type="text/css">
+    .tg  {border-collapse:collapse;border-color:#ccc;border-spacing:0;}
+    .tg td{background-color:#fff;border-color:#ccc;border-style:solid;border-width:1px;color:#333;
+      font-family:Arial, sans-serif;font-size:18px;overflow:hidden;padding:10px 5px;word-break:normal;}
+    .tg th{background-color:#f0f0f0;border-color:#ccc;border-style:solid;border-width:1px;color:#333;
+      font-family:Arial, sans-serif;font-size:24px;font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+    .tg .tg-0lax{text-align:left;vertical-align:top}
+    </style>
 <h1>
     Leaderboard
 </h1>
+<center>
+<table class="tg">
+    <thead>
+      <tr>
+        <th class="tg-0lax">Username</th>
+        <th class="tg-0lax">Points</th>
+      </tr>
+    </thead>
+    <tbody>
+        {% for points in points %}
+        <tr>
+          <td class="tg-0lax">{{ points.author.username }}</td>
+          <td class="tg-0lax">{{ points.points }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </center>
+
+
+
 {% endblock %}

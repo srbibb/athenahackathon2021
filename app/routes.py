@@ -38,7 +38,8 @@ def logout():
 @app.route('/leaderboard/<username>')
 @login_required
 def leaderboard(username):
-    return render_template("leaderboard.html", user=username)
+    pointlist = current_user.followed_points().all()
+    return render_template("leaderboard.html", user=username, points=pointlist)
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
