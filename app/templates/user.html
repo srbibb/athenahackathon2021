@@ -1,6 +1,41 @@
 {% extends "base.html" %}
 {% block content %}
-    <h2>{{ user }}: {{ points }}</h2>
+    <h2>{{ user.username }}: {{ user.points }}</h2>
+
+    <table class="aboutme">
+        <tr valign="top">
+            <td>
+                {% if user.about_me %}<p>{{ user.about_me }}</p>{% endif %}
+                {% if user.last_seen %}<p>Last seen on: {{ user.last_seen }}</p>{% endif %}
+                <p> {{ user.followers.count() }} followers, {{ user.followed.count() }} following.</p>
+                {% if user == current_user %}
+
+                {% for user in current_user.followed %}
+
+                {{ user.username }}
+
+                {% endfor %}
+
+                {% elif not current_user.is_following(user) %}
+                <p>
+                    <form action="{{ url_for('follow', username=user.username) }}" method="post">
+                        {{ form.hidden_tag() }}
+                        {{ form.submit(value='Follow') }}
+                    </form>
+                </p>
+                {% else %}
+                <p>
+                    <form action="{{ url_for('unfollow', username=user.username) }}" method="post">
+                        {{ form.hidden_tag() }}
+                        {{ form.submit(value='Unfollow') }}
+                    </form>
+                </p>
+                {% endif %}
+            </td>
+        </tr>
+    </table>
+
+
     <div class="activitylog">
     <h4>Log activity</h4>
     <form action="" method="post" novalidate>
@@ -18,7 +53,7 @@
             <br>
             {{ form.comment(cols=58, rows=4) }}<br>
             {% for error in form.comment.errors %}
-            <span style="color: red;">[{{ error }}]</span>
+            <span class="error" style="color: red;">[{{ error }}]</span>
             {% endfor %}
         </p>
         <p>{{ form.submit() }}</p>
@@ -29,10 +64,16 @@
     <hr>
     {% for post in posts %}
     <div class="activitypost">
+    <span id="posted info"><b> {{ post.author.username }} posted at {{ post.timestamp }}</b></span>
+    <br>
     <span id="postauthor"></span><b>{{ post.author.username }}</b></span>
     <span id="postbody">{{ post.body }}</span>
     <br>
-    <span id="posttime"><b>Posted:</b> {{post.timestamp }}</span>
+    <span id="postlikes"> <form action="{{ url_for('update_like', username=user.username, post_id=post.id) }}" method="POST">{{ post.likes }}
+        <button><i class="fa fa-heart"></i></button>
+   </form>
+    </span>
+    <br>
     <br>
     </div>
     {% endfor %}

@@ -29,6 +29,9 @@ class RegistrationForm(FlaskForm):
         if user is not None:
             raise ValidationError('This email address has already been registered. Please use a different email address.')
 
+class EmptyForm(FlaskForm):
+    submit = SubmitField('Submit')
+
 class LogActivity(FlaskForm):
     actions = {'donated':20,'recycled':1,'upcycled':15,'reused':3,'purchased second hand':20, 'completed the weekly challenge':25,'have something else to share':0}
     action = SelectField('Action:',choices=list(actions.keys()), validators=[DataRequired()])
