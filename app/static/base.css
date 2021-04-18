@@ -88,10 +88,22 @@ body {
     padding-bottom: 5px;
     margin-bottom: 20px;
     width: 60%;
-    height: 50px;  
+    height: 85px;  
     border-radius: 5px;
     background-color: #C4C4C4;
     font-family: Roboto, Open Sans, sans-serif;
+}
+
+
+#post_link {
+    text-decoration: none;
+    color: black;
+  }
+  
+
+.followers {
+    font-family: Roboto, Open Sans, sans-serif;
+    text-align: left;
 }
 
 #posttime {
@@ -101,7 +113,7 @@ body {
 
 #postlikes {
     padding-left: 80%;
-    text-align: center;
+    text-align: right;
 }
 
 .aboutme {
