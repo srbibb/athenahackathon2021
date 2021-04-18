@@ -59,7 +59,23 @@ body {
   }
 
 /* Post content */
+.error {
+    font-family: Roboto, Open Sans, sans-serif;
+    text-align: center;
+}
+.register {
+    text-align:center;
+    margin-left: auto;
+    margin-right: auto;
+    width: 80%;
+}
 .activitylog {
+    text-align:center;
+    margin-left: auto;
+    margin-right: auto;
+    width: 80%;
+}
+.login {
     text-align:center;
     margin-left: auto;
     margin-right: auto;
@@ -81,4 +97,9 @@ body {
 #posttime {
   padding-left: 70%;
   font-size:smaller;
+}
+
+#postlikes {
+    padding-left: 90%;
+    text-align: right;
 }

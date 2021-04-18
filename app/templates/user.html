@@ -18,7 +18,7 @@
             <br>
             {{ form.comment(cols=58, rows=4) }}<br>
             {% for error in form.comment.errors %}
-            <span style="color: red;">[{{ error }}]</span>
+            <span class="error" style="color: red;">[{{ error }}]</span>
             {% endfor %}
         </p>
         <p>{{ form.submit() }}</p>
@@ -29,10 +29,16 @@
     <hr>
     {% for post in posts %}
     <div class="activitypost">
+    <span id="posted info"><b> {{ post.author.username }} posted at {{ post.timestamp }}</b></span>
+    <br>
     <span id="postauthor"></span><b>{{ post.author.username }}</b></span>
     <span id="postbody">{{ post.body }}</span>
     <br>
-    <span id="posttime"><b>Posted:</b> {{post.timestamp }}</span>
+    <span id="postlikes">{{ post.likes }} <form action="{{ url_for('update_like', username=user, post_id=post.id) }}" method="POST">
+        <button><i class="fa fa-heart"></i></button>
+   </form>
+    </span>
+    <br>
     <br>
     </div>
     {% endfor %}

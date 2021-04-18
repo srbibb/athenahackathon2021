@@ -35,7 +35,7 @@ class Post(db.Model):
     timestamp = db.Column(db.String, index=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     points = db.Column(db.Integer,default=0)
-
+    likes = db.Column(db.Integer, default=0)
     def __repr__(self):
         return '<Post {}>'.format(self.body)
 

@@ -77,7 +77,7 @@ def user(username):
                 post.body = post.body + '\n' + form.comment.data
         post.timestamp = datetime.now().strftime("%H:%M:%S %d-%m-%Y ")
 
-        user.points = user.points + post.points
+        user.points += post.points
         db.session.add(post)
         db.session.commit()
         form = LogActivity()
@@ -85,10 +85,16 @@ def user(username):
         
     return render_template("user.html",user=username, posts=posts, form=form, points=user.points)
 
-
-@app.route('/test')
-def found():
-  return 
+@app.route('/update_like',methods=['POST'])
+@login_required
+def update_like():
+    username =  request.args.get('username')
+    post_id = request.args.get('post_id')
+   
+    post = Post.query.get(post_id)
+    post.likes += 1
+    db.session.commit()
+    return redirect(url_for('user', username=username))
 
 
 
