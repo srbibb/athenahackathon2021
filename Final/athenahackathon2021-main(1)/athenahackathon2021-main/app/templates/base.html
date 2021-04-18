@@ -1,0 +1,45 @@
+<html>
+    <head>
+        {% if title %}
+        <title>{{ title }} </title>
+        {% else %}
+        <title>Welcome to REYO</title>
+        {% endif %}
+        <link rel="stylesheet" href={{ url_for('static', filename='base.css') }}>
+        <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto" rel="stylesheet" type="text/css">
+        <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open&Sans" rel="stylesheet" type="text/css">
+        <link 
+        href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.css" 
+        rel="stylesheet"  type='text/css'>
+        </head>
+    <body>
+              <div class="navbar">
+            
+            <a href="{{ url_for('index') }}">Home</a>
+            <a href="{{ url_for('ruyo') }}">Test recyclability</a>
+            {% if current_user.is_anonymous %}
+            <a href="{{ url_for('login') }}">Login</a>
+            {% else %}
+            <a href="{{ url_for('user', username=current_user.username) }}">Profile</a>
+            <a href="{{ url_for('leaderboard', username=current_user.username ) }}">Leaderboard</a>
+            <a href="{{ url_for('logout') }}">Logout</a>
+            {% endif %}
+            <div class="image"> <img src="{{ url_for('static', filename='logo.png')}}" alt="logo" width=100px height=100px/></div>
+        </div>
+        
+
+        <div class="main">
+        <ul>
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <ul>
+            {% for message in messages %}
+            <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        {% endwith %}
+        {% block content %}{% endblock %}
+    </div>
+    </body>
+</html>
